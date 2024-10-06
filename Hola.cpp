@@ -3,15 +3,29 @@
 using namespace std;
 
 void menu () {
-    cout << "Menu" << endl << "1: Suma" << endl;
+    cout << "Menu" << endl << "1: Suma" << endl << "2: Inventario" << endl;
 }
 
-int suma (int a, int b){
+int suma (int a, int b) {
     int resultado = a + b;
     return resultado;
 }
+void inventario (int vectorA[5]) {
+    for (int i = 0; i < 5; i ++) {
+        cout << "Ingresa el valor del articulo " << i + 1 << ": ";
+        cin >> vectorA[i];
+    } 
+
+    cout << "Inventario: ";
+    for (int i = 0; i < 5; i ++) {
+        cout << "Articulo " << i + 1 << ": " << vectorA[i] << endl;
+    }
+}
+
+
 int main () {
     int opcion;
+    int vectorA[5];
 
     do {
         menu ();
@@ -28,7 +42,10 @@ int main () {
             resultado = suma(a,b);
             cout << "El resultado de la suma es: " << resultado;
         }
-    } while ( opcion != 2);
+        if (opcion == 2) {
+            inventario(vectorA);
+        }
+    } while ( opcion != 3);
 
     return 0;
 }
