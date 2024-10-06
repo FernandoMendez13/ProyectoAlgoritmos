@@ -19,7 +19,7 @@ void inventario (int vectorA[5], int codigos[5]) {
     set<int> codigosUsados;
 
     for (int i = 0; i < 5; i ++) {
-        cout << "Ingresa el valor del articulo " << i + 1 << ": ";
+        cout << "Ingresa el valor del articulo.. " << i + 1 << ": ";
         cin >> vectorA[i];
 
         int codigo;
