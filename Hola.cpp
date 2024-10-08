@@ -6,63 +6,81 @@
 using namespace std;
 
 void menu () {
-    cout << "Menu" << endl << "1: Suma" << endl << "2: Inventario" << endl << "3: Salir" << endl;
+    cout << "Tienda" << endl; 
+    cout << "1: Inventario" << endl;
+    cout << "2: Agregar articulo" << endl;
+    cout << "3: Editar articulo" << endl; 
+    cout << "4: Buscar articulo" << endl; 
+    cout << "5: Eliminar articulo" << endl; 
+    cout << "6: Salir" << endl;
 }
-
-int suma (int a, int b) {
-    int resultado = a + b;
-    return resultado;
+void inventario (string vectorA[5], int codigosUnicos[5]) {
+    cout << "Inventario:" << endl;
+    for (int i = 0; i < 5; i++) {
+        if (codigosUnicos[i] != 0) {
+            cout << "Articulo" << i + 1 << ", " << "codigo: " << "#" << codigosUnicos[i] << ": " << vectorA[i] << endl;
+        }
+    }
 }
-void inventario (int vectorA[5], int codigos[5]) {
+void generarCodigos (int codigosUnicos[5]) {
 
     srand(time(0));
     set<int> codigosUsados;
 
     for (int i = 0; i < 5; i ++) {
-        cout << "Ingresa el valor del articulo.. " << i + 1 << ": ";
-        cin >> vectorA[i];
-
         int codigo;
 
         do {
-            codigo = rand () % 20 + 10;
+            codigo = rand () % 100 + 10;
         } while (codigosUsados.find(codigo) != codigosUsados.end());
 
-        codigos[i] = codigo;
+        codigosUnicos[i] = codigo;
         codigosUsados.insert(codigo);
     } 
-
-    cout << "Inventario: ";
-    for (int i = 0; i < 5; i ++) {
-        cout << "Articulo " << i + 1 << ", " << "codigo: "<< "#" << codigos[i] << ": " << vectorA[i] << endl;
-    }
 }
 
+int eliminarArticulo (int codigoProducto, string vectorA[5], int codigosUnicos[5]) {
+    for (int i = 0; i < 5; i++) {
+        if (codigoProducto == codigosUnicos[i]){
+            for (int j = i; j < 4; j++) {
+                vectorA[j] = vectorA[j + 1];
+                codigosUnicos[j] = codigosUnicos[j+1];
+            }
+            vectorA[4] = " ";
+            codigosUnicos[4] = 0;
+            return 1;
+        }
+        
+    }
+    return 0;  
+}
 
 int main () {
     int opcion;
-    int vectorA[5];
-    int codigos[5];
+    string vectorA[5] = {"Gorra", "Chumpa", "Camisa", "Pantalon", "Playera"};
+    int codigosUnicos[5];
+
+    generarCodigos(codigosUnicos);
 
     do {
         menu ();
         cout << "Ingrese una opcion: " << endl;
         cin >> opcion;
         if (opcion == 1) {
-            int a;
-            int b;
-            int resultado;
-            cout << "Ingrese un numero:" << endl;
-            cin >> a;
-            cout << "Ingrese un numero:" << endl;
-            cin >> b;
-            resultado = suma(a,b);
-            cout << "El resultado de la suma es: " << resultado;
+            inventario(vectorA, codigosUnicos);
         }
-        if (opcion == 2) {
-            inventario(vectorA, codigos);
+        if (opcion == 5) {
+            int codigoProducto;
+            cout << "Ingrese el codigo del articulo a eliminar: ";
+            cin >> codigoProducto;
+            
+            if (eliminarArticulo(codigoProducto, vectorA, codigosUnicos)) {
+                cout << "Articulo eliminado" << endl;
+            } else {
+                cout << "Codigo no encontrado" << endl;
+            } 
         }
-    } while ( opcion != 3);
+    } while ( opcion != 6);
 
     return 0;
 }
