@@ -1,0 +1,23 @@
+1) Crear inventario (Menu)
+2) Crear función para modificar productos
+	1) Modificar cantidad del producto
+	2) Modificar el precio del producto
+	3) Modificar nombre del producto
+3) Crear función para eliminar productos
+	1) Eliminar producto usando el código del producto
+4) Crear función para para consultar productos del inventario
+	1) Buscar producto por codigo y mostrar todos los detalles
+5) Crear función para ingresar producto
+	1) Asignarle código a cada producto
+ 	2) Asignarle nombre a cada producto
+ 	3) Asignar cantidad disponible de cada producto
+	4) Asignar precio por unidad a cada producto
+	5) Asignar fecha de ingreso a cada producto
+	6) Agregar limite al inventario [100]
+6) Inventario
+	1) Mostrar productos del inventario ordenados por nombre
+	2) Calcular valor total del inventario
+	3) Buscar productos que lleven 1 año en el inventario
+7) Condiciones
+	1) No codigos de producto repetidos
+	2) Mostrar limite del inventario o si esta vacío
