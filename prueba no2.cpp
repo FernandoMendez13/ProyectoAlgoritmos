@@ -119,15 +119,15 @@ int main() {
                 inventario(vectorA, codigosUnicos);
                 break;
             case 2:
-				agregarProducto;
+				agregarProducto(vectorA, codigosUnicos);
 				cout << "Que producto desea agregar?" << endl;
 				cout << "Porfavor ingrese los datos requeridos" << endl;
 				agregarProducto();
 				cout << "Producto agregado exitosamente" << endl;
 				break;   
 			case 4:
-                buscarProducto();
-                break	 
+                buscarProducto(vectorA, codigosUnicos);
+                break;	 
             case 5:
                 int codigoProducto;
                 cout << "Ingrese el codigo del articulo a eliminar: ";

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+int numeroProductos = 5;
+
 void menu () {
     cout << "Tienda" << endl; 
     cout << "1: Inventario" << endl;
@@ -14,20 +16,20 @@ void menu () {
     cout << "5: Eliminar articulo" << endl; 
     cout << "6: Salir" << endl;
 }
-void inventario (string vectorA[5], int codigosUnicos[5]) {
+void inventario (string vectorA[10], int codigosUnicos[10]) {
     cout << "Inventario:" << endl;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 10; i++) {
         if (codigosUnicos[i] != 0) {
             cout << "Articulo" << i + 1 << ", " << "codigo: " << "#" << codigosUnicos[i] << ": " << vectorA[i] << endl;
         }
     }
 }
-void generarCodigos (int codigosUnicos[5]) {
+void generarCodigos (int codigosUnicos[10]) {
 
     srand(time(0));
     set<int> codigosUsados;
 
-    for (int i = 0; i < 5; i ++) {
+    for (int i = 0; i < 10; i ++) {
         int codigo;
 
         do {
@@ -39,15 +41,33 @@ void generarCodigos (int codigosUnicos[5]) {
     } 
 }
 
-int eliminarArticulo (int codigoProducto, string vectorA[5], int codigosUnicos[5]) {
-    for (int i = 0; i < 5; i++) {
+void agregarProducto(string vectorA[10], int codigosUnicos[10]) {
+    if (numeroProductos >= 10) {
+        cout << "El inventario esta lleno.\n";
+        return;
+    }
+
+    cout << "Ingresa el nombre del nuevo producto: ";
+    cin.ignore();  // Para ignorar el salto de línea anterior
+    getline(cin, vectorA[numeroProductos]);
+
+    cout << "Ingresa el codigo del nuevo producto: ";
+    cin >> codigosUnicos[numeroProductos];
+
+    numeroProductos++;
+    cout << "Producto agregado exitosamente." << endl;
+}
+
+int eliminarArticulo (int codigoProducto, string vectorA[10], int codigosUnicos[10]) {
+    for (int i = 0; i < 10; i++) {
         if (codigoProducto == codigosUnicos[i]){
-            for (int j = i; j < 4; j++) {
+            for (int j = i; j < 9; j++) {
                 vectorA[j] = vectorA[j + 1];
                 codigosUnicos[j] = codigosUnicos[j+1];
             }
-            vectorA[4] = " ";
-            codigosUnicos[4] = 0;
+            vectorA[9] = " ";
+            codigosUnicos[9] = 0;
+            numeroProductos--;
             return 1;
         }
         
@@ -57,8 +77,8 @@ int eliminarArticulo (int codigoProducto, string vectorA[5], int codigosUnicos[5
 
 int main () {
     int opcion;
-    string vectorA[5] = {"Gorra", "Chumpa", "Camisa", "Pantalon", "Playera"};
-    int codigosUnicos[5];
+    string vectorA[10] = {"Gorra", "Chumpa", "Camisa", "Pantalon", "Playera"};
+    int codigosUnicos[10];
 
     generarCodigos(codigosUnicos);
 
@@ -69,6 +89,11 @@ int main () {
         if (opcion == 1) {
             inventario(vectorA, codigosUnicos);
         }
+
+        if (opcion == 2) {
+            agregarProducto(vectorA, codigosUnicos);
+        }
+
         if (opcion == 5) {
             int codigoProducto;
             cout << "Ingrese el codigo del articulo a eliminar: ";
