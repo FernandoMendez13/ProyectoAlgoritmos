@@ -58,6 +58,16 @@ void agregarProducto(string vectorA[10], int codigosUnicos[10]) {
     cout << "Producto agregado exitosamente." << endl;
 }
 
+void buscarArticulo (int codigosUnicos[10], string vectorA[10], int codigoBusqueda) {
+    for (int i = 0; i < 10; i++) {
+        if (codigoBusqueda == codigosUnicos[i]) {
+            cout << "El producto con codigo: " << codigosUnicos[i] << " es: "  << vectorA[i] << endl;
+            return;
+        }
+    }
+    cout << "Producto no encontrado" << endl;
+
+}
 int eliminarArticulo (int codigoProducto, string vectorA[10], int codigosUnicos[10]) {
     for (int i = 0; i < 10; i++) {
         if (codigoProducto == codigosUnicos[i]){
@@ -92,6 +102,13 @@ int main () {
 
         if (opcion == 2) {
             agregarProducto(vectorA, codigosUnicos);
+        }
+
+        if (opcion == 4) {
+            int codigoBusqueda;
+            cout << "Ingrese el codigo del producto que desea buscar: " << endl;
+            cin >> codigoBusqueda;
+            buscarArticulo(codigosUnicos, vectorA, codigoBusqueda);
         }
 
         if (opcion == 5) {
