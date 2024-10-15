@@ -16,11 +16,11 @@ void menu () {
     cout << "5: Eliminar articulo" << endl; 
     cout << "6: Salir" << endl;
 }
-void inventario (string vectorA[10], int codigosUnicos[10]) {
+void inventario (string vectorA[10], int codigosUnicos[10], string fechaProducto[10]) {
     cout << "Inventario:" << endl;
     for (int i = 0; i < 10; i++) {
         if (codigosUnicos[i] != 0) {
-            cout << "Articulo" << i + 1 << ", " << "codigo: " << "#" << codigosUnicos[i] << ": " << vectorA[i] << endl;
+            cout << "Articulo" << i + 1 << ", " << "codigo: " << "#" << codigosUnicos[i] << ": " << vectorA[i] << " fecha: " << fechaProducto[i] << endl;
         }
     }
 }
@@ -41,7 +41,7 @@ void generarCodigos (int codigosUnicos[10]) {
     } 
 }
 
-void agregarProducto(string vectorA[10], int codigosUnicos[10]) {
+void agregarProducto(string vectorA[10], int codigosUnicos[10], string fechaProducto[10]) {
     if (numeroProductos >= 10) {
         cout << "El inventario esta lleno.\n";
         return;
@@ -54,15 +54,27 @@ void agregarProducto(string vectorA[10], int codigosUnicos[10]) {
     cout << "Ingresa el codigo del nuevo producto: ";
     cin >> codigosUnicos[numeroProductos];
 
+    cout << "Ingresa la fecha del nuevo producto: ";
+    cin >> fechaProducto[numeroProductos];
+
     numeroProductos++;
     cout << "Producto agregado exitosamente." << endl;
 }
 
-void editarProducto(string vectorA[10], int codigosUnicos[10], int codigoBusqueda) {
+void editarProducto(string vectorA[10], int codigosUnicos[10], int codigoBusqueda, string fechaProducto[10]) {
     for (int i = 0; i < 10; i++) {
         if (codigoBusqueda == codigosUnicos[i]) {
+            
             cout << "Ingrese el nuevo nombre para el producto: " << endl;
+            cin.ignore();
             getline(cin, vectorA[i]);
+
+            cout << "Ingrese el nuevo codigo del producto: " << endl;
+            cin >> codigosUnicos[i];
+
+            cout << "Ingrese la nueva fecha del producto: " << endl;
+            cin >> fechaProducto[i];
+
             cout << "Producto actualizado exitosamente" << endl;
             return;
         }
@@ -100,6 +112,7 @@ int eliminarArticulo (int codigoProducto, string vectorA[10], int codigosUnicos[
 int main () {
     int opcion;
     string vectorA[10] = {"Gorra", "Chumpa", "Camisa", "Pantalon", "Playera"};
+    string fechaProducto[10] = {"10:12:2020","20:01:2022","11:11:2019","08:05:2013","12:10:2021"};
     int codigosUnicos[10];
 
     generarCodigos(codigosUnicos);
@@ -109,18 +122,18 @@ int main () {
         cout << "Ingrese una opcion: " << endl;
         cin >> opcion;
         if (opcion == 1) {
-            inventario(vectorA, codigosUnicos);
+            inventario(vectorA, codigosUnicos, fechaProducto);
         }
 
         if (opcion == 2) {
-            agregarProducto(vectorA, codigosUnicos);
+            agregarProducto(vectorA, codigosUnicos, fechaProducto);
         }
 
         if (opcion == 3) {
             int codigoBusqueda;
             cout << "Ingresa el codigo del producto que desea editar: " << endl;
             cin >> codigoBusqueda;
-            editarProducto(vectorA, codigosUnicos, codigoBusqueda);
+            editarProducto(vectorA, codigosUnicos, codigoBusqueda, fechaProducto);
         }
 
         if (opcion == 4) {
