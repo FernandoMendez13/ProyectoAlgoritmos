@@ -5,8 +5,6 @@
 
 using namespace std;
 
-int numeroProductos = 5;
-
 void menu () {
     cout << "Tienda" << endl; 
     cout << "1: Inventario" << endl;
@@ -16,10 +14,21 @@ void menu () {
     cout << "5: Eliminar articulo" << endl; 
     cout << "6: Salir" << endl;
 }
+int contarProductos(string vectorA[10]) {
+    int contador = 0;
+    for (int i = 0; i < 10; i++) {
+        if (vectorA[i] != "") {
+            contador++;
+        }
+    }
+    return contador;
+}
 void inventario (string vectorA[10], int codigosUnicos[10], string fechaProducto[10]) {
     cout << "Inventario:" << endl;
+    int totalProductos = contarProductos(vectorA);
+    cout << "Productos en el inventario: " << totalProductos << endl;
     for (int i = 0; i < 10; i++) {
-        if (codigosUnicos[i] != 0) {
+        if (codigosUnicos[i] != 0 && vectorA[i] != "") {
             cout << "Articulo" << i + 1 << ", " << "codigo: " << "#" << codigosUnicos[i] << ": " << vectorA[i] << " fecha: " << fechaProducto[i] << endl;
         }
     }
@@ -41,23 +50,24 @@ void generarCodigos (int codigosUnicos[10]) {
     } 
 }
 
-void agregarProducto(string vectorA[10], int codigosUnicos[10], string fechaProducto[10]) {
-    if (numeroProductos >= 10) {
+void agregarProducto (string vectorA[10], int codigosUnicos[10], string fechaProducto[10]) {
+    if (contarProductos(vectorA) >= 10) {
         cout << "El inventario esta lleno.\n";
         return;
     }
+    int posicion = contarProductos(vectorA);
 
     cout << "Ingresa el nombre del nuevo producto: ";
     cin.ignore();  // Para ignorar el salto de línea anterior
-    getline(cin, vectorA[numeroProductos]);
+    getline(cin, vectorA[posicion]);
+
 
     cout << "Ingresa el codigo del nuevo producto: ";
-    cin >> codigosUnicos[numeroProductos];
+    cin >> codigosUnicos[posicion];
 
     cout << "Ingresa la fecha del nuevo producto: ";
-    cin >> fechaProducto[numeroProductos];
+    cin >> fechaProducto[posicion];
 
-    numeroProductos++;
     cout << "Producto agregado exitosamente." << endl;
 }
 
@@ -92,16 +102,18 @@ void buscarArticulo (int codigosUnicos[10], string vectorA[10], int codigoBusque
     cout << "Producto no encontrado" << endl;
 
 }
-int eliminarArticulo (int codigoProducto, string vectorA[10], int codigosUnicos[10]) {
-    for (int i = 0; i < 10; i++) {
+int eliminarArticulo (int codigoProducto, string vectorA[10],string fechaProducto[10], int codigosUnicos[10]) {
+    int totalProductos = contarProductos(vectorA);
+    for (int i = 0; i < totalProductos; i++) {
         if (codigoProducto == codigosUnicos[i]){
-            for (int j = i; j < 9; j++) {
+            for (int j = i; j < totalProductos -1; j++) {
                 vectorA[j] = vectorA[j + 1];
-                codigosUnicos[j] = codigosUnicos[j+1];
+                codigosUnicos[j] = codigosUnicos[j + 1];
+                fechaProducto[j] = fechaProducto[j + 1];
             }
-            vectorA[9] = " ";
-            codigosUnicos[9] = 0;
-            numeroProductos--;
+            vectorA[totalProductos - 1] = "";
+            codigosUnicos[totalProductos -1] = 0;
+            fechaProducto[totalProductos -1] = "";
             return 1;
         }
         
@@ -112,7 +124,7 @@ int eliminarArticulo (int codigoProducto, string vectorA[10], int codigosUnicos[
 int main () {
     int opcion;
     string vectorA[10] = {"Gorra", "Chumpa", "Camisa", "Pantalon", "Playera"};
-    string fechaProducto[10] = {"10:12:2020","20:01:2022","11:11:2019","08:05:2013","12:10:2021"};
+    string fechaProducto[10] = {"10/12/2020","20/01/2022","11/11/2019","08/05/2013","12/10/2021"};
     int codigosUnicos[10];
 
     generarCodigos(codigosUnicos);
@@ -148,7 +160,7 @@ int main () {
             cout << "Ingrese el codigo del articulo a eliminar: ";
             cin >> codigoProducto;
             
-            if (eliminarArticulo(codigoProducto, vectorA, codigosUnicos)) {
+            if (eliminarArticulo(codigoProducto, vectorA,  fechaProducto, codigosUnicos)) {
                 cout << "Articulo eliminado" << endl;
             } else {
                 cout << "Codigo no encontrado" << endl;
