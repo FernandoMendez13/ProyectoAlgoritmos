@@ -23,6 +23,7 @@ int contarProductos(string vectorA[10]) {
     }
     return contador;
 }
+
 void inventario (string vectorA[10], int codigosUnicos[10], string fechaProducto[10]) {
     cout << "Inventario:" << endl;
     int totalProductos = contarProductos(vectorA);
