@@ -2,8 +2,12 @@
 #include <cstdlib>
 #include <ctime>
 #include <set>
+#include <windows.h>
+
 
 using namespace std;
+
+
 
 void menu () {
     cout << "Tienda" << endl; 
@@ -185,6 +189,8 @@ int eliminarArticulo (int codigoProducto, string vectorA[10],string fechaProduct
 }
 
 int main () {
+    
+    SetConsoleOutputCP(CP_UTF8);
     int opcion;
     string vectorA[10] = {"Gorra", "Chumpa", "Camisa", "Pantalon", "Playera"};
     string fechaProducto[10] = {"10/12/2020","20/01/2022","11/11/2019","08/05/2013","12/10/2021"};
@@ -196,7 +202,6 @@ int main () {
     generarCodigos(codigosUnicos, codigosUsados);
     system("cls");
     do {
-
         menu ();
         cout << "Ingrese una opcion: " << endl;
         cin >> opcion;
