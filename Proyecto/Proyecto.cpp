@@ -3,7 +3,7 @@
 #include <ctime>
 #include <set>
 #include <windows.h>
-
+#include <algorithm>
 
 using namespace std;
 
@@ -18,7 +18,8 @@ void menu () {
     cout << "5: Eliminar articulo" << endl; 
     cout << "6: Valor inventario" << endl;
     cout << "7: Productos antiguos" << endl;
-    cout << "8: Salir" << endl;
+    cout << "8: Inventario ordenado alfabeticamente" << endl;
+    cout << "9: Salir" << endl;
 }
 
 int contarProductos(string vectorA[10]) {
@@ -30,7 +31,16 @@ int contarProductos(string vectorA[10]) {
     }
     return contador;
 }
-
+void inventario (string vectorA[10], int codigosUnicos[10], string fechaProducto[10], int precioProducto[10], int unidadProducto[10]){
+    cout << "Inventario:" << endl;
+    int totalProductos = contarProductos(vectorA);
+    cout << "Productos en el inventario: " << totalProductos << endl;
+    for (int i = 0; i < 10; i++) {
+        if (codigosUnicos[i] != 0 && vectorA[i] != "") {
+            cout << "Articulo " << i + 1 << ", " << "codigo: " << "#" << codigosUnicos[i] << ": " << vectorA[i] << " fecha: " << fechaProducto[i] << ", precio: " << precioProducto[i] << ", cantidad: " << unidadProducto[i] << endl;
+        }
+    }
+}
 void valorInventario(int precioProducto[10], int unidadProducto[10]) {
     int total = 0;
     for (int i = 0; i < 10; i++) {
@@ -59,16 +69,25 @@ void productosAntiguos (string vectorA[10], string fechaProducto[10]) {
         } 
     }
 }
-void inventario (string vectorA[10], int codigosUnicos[10], string fechaProducto[10], int precioProducto[10], int unidadProducto[10]){
-    cout << "Inventario:" << endl;
-    int totalProductos = contarProductos(vectorA);
-    cout << "Productos en el inventario: " << totalProductos << endl;
-    for (int i = 0; i < 10; i++) {
-        if (codigosUnicos[i] != 0 && vectorA[i] != "") {
-            cout << "Articulo " << i + 1 << ", " << "codigo: " << "#" << codigosUnicos[i] << ": " << vectorA[i] << " fecha: " << fechaProducto[i] << ", precio: " << precioProducto[i] << ", cantidad: " << unidadProducto[i] << endl;
+
+void ordenarInventarioAlfabetico(string vectorA[10], int codigosUnicos[10], string fechaProducto[10], int precioProducto[10], int unidadProducto[10]) {
+    for (int i = 0; i < 10 - 1; i++) {
+        for (int j = i + 1; j < 10; j++) {
+            if (vectorA[i] > vectorA[j] && !vectorA[j].empty()) {
+                
+                swap(vectorA[i], vectorA[j]);
+                swap(codigosUnicos[i], codigosUnicos[j]);
+                swap(fechaProducto[i], fechaProducto[j]);
+                swap(precioProducto[i], precioProducto[j]);
+                swap(unidadProducto[i], unidadProducto[j]);
+            }
         }
     }
+
+    cout << "Inventario ordenado alfabéticamente:" << endl;
+    inventario (vectorA, codigosUnicos, fechaProducto, precioProducto, unidadProducto);
 }
+
 void generarCodigos (int codigosUnicos[10], set <int> & codigosUsados) {
 
     srand(time(0));
@@ -248,7 +267,11 @@ int main () {
             system("cls");
             productosAntiguos(vectorA, fechaProducto);
         }
-    } while ( opcion != 8);
+        if (opcion == 8) {
+            system("cls");
+            ordenarInventarioAlfabetico(vectorA, codigosUnicos, fechaProducto, precioProducto, unidadProducto);
+        }
+    } while ( opcion != 9);
 
     return 0;
 }
